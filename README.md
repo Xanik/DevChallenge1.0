@@ -28,3 +28,9 @@ Go is an errors first language – please use this approach to write a safe pro
 * Line of sight (Align the happy path to the left edge)
 * No fluff – use what's necessary
 * Go vet saying OK
+
+##Run TEST
+*go test ./... -v 
+
+##Go Vet
+*go vet
