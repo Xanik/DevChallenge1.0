@@ -29,8 +29,11 @@ Go is an errors first language – please use this approach to write a safe pro
 * No fluff – use what's necessary
 * Go vet saying OK
 
-##Run TEST
+
+```
+Run Go Test
 *go test ./... -v 
 
-##Go Vet
+Run Go Vet
 *go vet
+```
