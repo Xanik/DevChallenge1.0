@@ -1,0 +1,39 @@
+syntax = 'proto3';
+
+option go_package = "GeneratedProtobuf";
+
+message StorageRequest {
+    string Message = 1;
+    float Value = 2;
+}
+
+message StorageResponse {
+    int64 Id = 1;
+    string Message = 2;
+    float Value = 3;
+}
+
+message GetByID {
+    int64 Id = 1;
+}
+
+message UpdateRequest{
+    int64 Id = 1;
+    string Message = 2;
+    float Value = 3;
+}
+
+message GetAllRequest {
+}
+
+message GetAllResponse {
+    repeated StorageResponse responses = 1;
+}
+
+service StorageService {
+    rpc Store (StorageRequest) returns (StorageResponse);
+    rpc Read (GetByID) returns (StorageResponse);
+    rpc GetAll (GetAllRequest) returns (GetAllResponse);
+    rpc Update (UpdateRequest) returns (StorageResponse);
+    rpc Delete (GetByID) returns (StorageResponse);
+}
