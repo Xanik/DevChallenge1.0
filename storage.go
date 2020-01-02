@@ -12,7 +12,7 @@ import (
 	"sync"
 )
 
-
+// New Storage Server Connection Created
 func newStorageService(server pb.StorageServiceServer) {
 	port := ":3030"
 	lis, err := net.Listen("tcp", port)
@@ -41,13 +41,17 @@ type response struct {
 	Value   float32
 }
 
+//Initialized a constructor  Of storage struct
 func newStorage() *storage {
 	return &storage{mutex: &sync.RWMutex{}, state: make(map[int64]interface{})}
 }
 
+//Generate Ascending ID
 func (s storage) generateID() int64 {
 	return int64(len(s.state) + 1)
 }
+
+// Store New Data With Given Body
 func (s storage) Store(ctx context.Context, m *pb.StorageRequest) (*pb.StorageResponse, error) {
 
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
@@ -70,6 +74,7 @@ func (s storage) Store(ctx context.Context, m *pb.StorageRequest) (*pb.StorageRe
 	}, nil
 }
 
+// Read Data By Given ID
 func (s storage) Read(ctx context.Context, m *pb.GetByID) (*pb.StorageResponse, error) {
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		fmt.Printf("Metadata Received: %v\n", md)
@@ -98,6 +103,7 @@ func (s storage) Read(ctx context.Context, m *pb.GetByID) (*pb.StorageResponse, 
 	}, nil
 }
 
+// GetAll Stored Data
 func (s storage) GetAll(ctx context.Context,m *pb.GetAllRequest) (*pb.GetAllResponse, error) {
 
 	s.mutex.RLock()
@@ -125,6 +131,7 @@ func (s storage) GetAll(ctx context.Context,m *pb.GetAllRequest) (*pb.GetAllResp
 	}, nil
 }
 
+// Update Existing Data By Given ID
 func (s storage) Update(ctx context.Context, m *pb.UpdateRequest) (*pb.StorageResponse, error) {
 
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
@@ -163,6 +170,7 @@ func (s storage) Update(ctx context.Context, m *pb.UpdateRequest) (*pb.StorageRe
 	}, nil
 }
 
+// Delete Existing Data By Given ID
 func (s storage) Delete(ctx context.Context, m *pb.GetByID) (*pb.StorageResponse, error) {
 	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		fmt.Printf("Metadata Received: %v\n", md)
