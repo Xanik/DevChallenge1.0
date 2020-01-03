@@ -8,11 +8,13 @@ import (
 	"testing"
 )
 
+// Initialize Server Service
 func init() {
 	go newStorageService(newStorage())
 
 }
 
+// New Storage Client Connection Created
 func newClient() pb.StorageServiceClient {
 	port := ":3030"
 
@@ -29,10 +31,7 @@ func newClient() pb.StorageServiceClient {
 
 }
 
-func newServer()  {
-
-}
-
+// TestStore Function
 func TestStore(t *testing.T) {
 
 	res, err := newClient().Store(context.Background(), &pb.StorageRequest{
@@ -45,6 +44,7 @@ func TestStore(t *testing.T) {
 	t.Log(res)
 }
 
+// TestRead Function
 func TestRead(t *testing.T) {
 
 	res, err := newClient().Read(context.Background(), &pb.GetByID{
@@ -57,6 +57,7 @@ func TestRead(t *testing.T) {
 	t.Log(res)
 }
 
+// TestGetAll Function
 func TestGetAll(t *testing.T) {
 	res, err := newClient().GetAll(context.Background(), &pb.GetAllRequest{})
 	if err != nil {
@@ -65,6 +66,7 @@ func TestGetAll(t *testing.T) {
 	t.Log(res)
 }
 
+// TestUpdate Function
 func TestUpdate(t *testing.T) {
 	res, err := newClient().Update(context.Background(), &pb.UpdateRequest{
 		Id:                   1,
@@ -77,6 +79,7 @@ func TestUpdate(t *testing.T) {
 	t.Log(res)
 }
 
+// TestDelete Function
 func TestDelete(t *testing.T) {
 	res, err := newClient().Delete(context.Background(), &pb.GetByID{
 		Id:                   1,
